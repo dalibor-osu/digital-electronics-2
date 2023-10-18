@@ -172,21 +172,22 @@ ISR(TIMER1_OVF_vect)
 
     no_of_overflows = 0;
 
-    static char text[] = "I like Digital electronics! ";
+    static char text[] = "hello world! ";
+    static int text_lenght = sizeof(text) / sizeof(text[0]);
     static int text_offset = 0;
 
     lcd_gotoxy(11, 1);
     for (int i = 0; i < 5; i++) {
         int char_idx = text_offset + i;
-        if (char_idx > 27) {
-            lcd_putc(text[char_idx - 28]);
-            continue;
+        if (char_idx >= text_lenght - 1) {
+            lcd_putc(text[char_idx - (text_lenght - 1)]);
+            continue; 
         }
 
         lcd_putc(text[char_idx]);
     }
 
-    if (++text_offset > 27) {
+    if (++text_offset >= text_lenght - 1) {
         text_offset = 0;
     }
 }
